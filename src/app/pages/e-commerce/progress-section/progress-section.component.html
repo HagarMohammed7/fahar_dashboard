@@ -1,0 +1,40 @@
+<nb-card size="medium" style="height: 34.573rem!important;">
+  <nb-card-body>
+    <div class="progress-info" >
+      <div class="subtitle">Avg overtime per week</div>
+      <div class="h3">{{500 | ngxNumberWithCommas }}</div>
+      <nb-progress-bar [value]="activeProgress"></nb-progress-bar>
+      <div class="caption description">
+        <bdi>Better than last week (70%)</bdi>
+      </div>
+    </div>
+
+    <div class="progress-info" >
+      <div class="subtitle">Today’s Performance</div>
+      <div class="h3">{{ 50 | ngxNumberWithCommas }}</div>
+      <nb-progress-bar [value]="activeProgress"></nb-progress-bar>
+      <div class="caption description">
+        <bdi>Better than last week (70%)</bdi>
+      </div>
+    </div>
+
+    <div class="progress-info" >
+      <div class="subtitle">Active FAHR Employees</div>
+      <div class="h3">{{ 50 | ngxNumberWithCommas }}</div>
+      <nb-progress-bar [value]="activeProgress"></nb-progress-bar>
+      <div class="caption description">
+        <bdi>Better than last week (70%)</bdi>
+      </div>
+    </div>
+
+    <div class="progress-info" >
+      <div class="subtitle">Absenteeism rate</div>
+      <div class="h3">{{ 50 | ngxNumberWithCommas }}</div>
+      <nb-progress-bar [value]="activeProgress"></nb-progress-bar>
+      <div class="caption description">
+        <bdi>Better than last week (70%)</bdi>
+      </div>
+    </div>
+   
+  </nb-card-body>
+</nb-card>
