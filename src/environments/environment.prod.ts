@@ -5,4 +5,5 @@
  */
 export const environment = {
   production: true,
+  serverUrl: 'http://mdawem-001-site2.atempurl.com'
 };

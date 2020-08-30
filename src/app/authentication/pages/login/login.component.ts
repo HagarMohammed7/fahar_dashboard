@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../@theme/components/auth/services/authentication.service';
 
 
 @Component({
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent  {
+export class LoginComponent {
 
   redirectDelay: number = 0;
   showMessages: any = {};
@@ -20,9 +21,10 @@ export class LoginComponent  {
   rememberMe = false;
 
   constructor(
-            
-              protected cd: ChangeDetectorRef,
-              protected router: Router) {
+
+    protected cd: ChangeDetectorRef,
+    protected router: Router,
+    protected service: AuthenticationService) {
 
     // this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
     // this.showMessages = this.getConfigValue('forms.login.showMessages');
@@ -31,26 +33,27 @@ export class LoginComponent  {
   }
 
   login(): void {
+    debugger
     this.errors = [];
     this.messages = [];
     this.submitted = true;
 
-    // this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
+    // this.service.authenticate(this.user).then((result: any) => {
     //   this.submitted = false;
+    //   debugger
+    // if (result.isSuccess()) {
+    //   this.messages = result.getMessages();
+    // } else {
+    //   this.errors = result.getErrors();
+    // }
 
-    //   if (result.isSuccess()) {
-    //     this.messages = result.getMessages();
-    //   } else {
-    //     this.errors = result.getErrors();
-    //   }
-
-    //   const redirect = result.getRedirect();
-    //   if (redirect) {
-    //     setTimeout(() => {
-    //       return this.router.navigateByUrl(redirect);
-    //     }, this.redirectDelay);
-    //   }
-    //   this.cd.detectChanges();
+    // const redirect = result.getRedirect();
+    // if (redirect) {
+    //   setTimeout(() => {
+    //     return this.router.navigateByUrl(redirect);
+    //   }, this.redirectDelay);
+    // }
+    // this.cd.detectChanges();
     // });
   }
 

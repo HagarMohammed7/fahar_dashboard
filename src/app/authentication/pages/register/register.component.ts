@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../../@theme/components/auth/services/authentication.service';
 
 @Component({
   selector: 'ngx-register',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(protected service: AuthenticationService) {
+
+  }
 
   ngOnInit(): void {
   }

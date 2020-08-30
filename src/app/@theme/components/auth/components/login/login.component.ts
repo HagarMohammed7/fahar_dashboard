@@ -10,6 +10,9 @@ import { getDeepFromObject } from '../../helpers';
 
 import { NbAuthService } from '../../services/auth.service';
 import { NbAuthResult } from '../../services/auth-result';
+import { AuthenticationService } from '../../services/authentication.service';
+import { NbTokenService } from '../..';
+import { NbAuthToken } from '../../services';
 
 @Component({
   selector: 'nb-login',
@@ -26,17 +29,19 @@ export class NbLoginComponent {
   errors: string[] = [];
   messages: string[] = [];
   user: any = {};
-  usermail : string = ""
-  userpassword : string = ""
+  usermail: string = ""
+  userpassword: string = ""
   submitted: boolean = false;
   socialLinks: NbAuthSocialLink[] = [];
   rememberMe = false;
   // adminUser:{} = {'username':'admin','mobile':'123456789','email':'admin@admin.com'}
 
   constructor(protected service: NbAuthService,
-              @Inject(NB_AUTH_OPTIONS) protected options = {},
-              protected cd: ChangeDetectorRef,
-              protected router: Router) {
+    @Inject(NB_AUTH_OPTIONS) protected options = {},
+    protected cd: ChangeDetectorRef,
+    protected router: Router,
+    protected tokenService: NbTokenService,
+    protected authService: AuthenticationService) {
 
     this.redirectDelay = this.getConfigValue('forms.login.redirectDelay');
     this.showMessages = this.getConfigValue('forms.login.showMessages');
@@ -50,32 +55,28 @@ export class NbLoginComponent {
     this.errors = [];
     this.messages = [];
     this.submitted = true;
+    debugger
 
-    if(this.usermail == "admin" && this.userpassword == "123456789"){
-    this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
+    this.authService.authenticate({
+      userNameOrEmailAddress: this.usermail,
+      password: this.userpassword,
+      rememberClient: this.rememberMe
+    }).subscribe((result: any) => {
       this.submitted = false;
-
-      if (result.isSuccess()) {
+      if (result.success == true) {
+        // set access token  
+        //result.result.accessToken
+        localStorage.setItem('appToken', result.result.accessToken)
+        // this.tokenService.set();
         this.router.navigate(['/pages/dashboard']);
         this.messages = result.getMessages();
 
       } else {
-        this.errors = result.getErrors();
+        console.log(result.error);
+        this.errors = result.error.message;
       }
-
-      const redirect = result.getRedirect();
-     
       this.cd.detectChanges();
     });
-
-    }
-    else {
-      this.router.navigate(['/pages/dashboard']);
-
-      // this.submitted = false;
-      // this.errors =["Credentials Not Valid"]
-      this.cd.detectChanges();
-    }
 
   }
 
