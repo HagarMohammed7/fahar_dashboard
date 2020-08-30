@@ -53,6 +53,7 @@ import { NbRequestPasswordComponent } from './components/request-password/reques
 import { NbResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 import { deepExtend } from './helpers';
+import { AuthenticationService } from './services/authentication.service';
 
 export function nbStrategiesFactory(options: NbAuthOptions, injector: Injector): NbAuthStrategy[] {
   const strategies = [];
@@ -95,6 +96,9 @@ export function nbNoOpInterceptorFilter(req: HttpRequest<any>): boolean {
     RouterModule,
     FormsModule,
   ],
+  providers: [
+    AuthenticationService
+  ],
   declarations: [
     NbAuthComponent,
     NbAuthBlockComponent,
@@ -116,7 +120,7 @@ export function nbNoOpInterceptorFilter(req: HttpRequest<any>): boolean {
 })
 export class NbAuthModule {
   static forRoot(nbAuthOptions?: NbAuthOptions): ModuleWithProviders {
-    return <ModuleWithProviders> {
+    return <ModuleWithProviders>{
       ngModule: NbAuthModule,
       providers: [
         { provide: NB_AUTH_USER_OPTIONS, useValue: nbAuthOptions },
