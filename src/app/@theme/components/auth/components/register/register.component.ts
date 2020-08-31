@@ -11,6 +11,7 @@ import { getDeepFromObject } from '../../helpers';
 import { NbAuthService } from '../../services/auth.service';
 import { NbAuthResult } from '../../services/auth-result';
 import { FormGroup } from '@angular/forms';
+import { AuthenticationService } from '../../services/authentication.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NbRegisterComponent {
-  registerLogin:FormGroup
+  registerLogin: FormGroup
   redirectDelay: number = 0;
   showMessages: any = {};
   strategy: string = '';
@@ -32,9 +33,10 @@ export class NbRegisterComponent {
   socialLinks: NbAuthSocialLink[] = [];
 
   constructor(protected service: NbAuthService,
-              @Inject(NB_AUTH_OPTIONS) protected options = {},
-              protected cd: ChangeDetectorRef,
-              protected router: Router) {
+    @Inject(NB_AUTH_OPTIONS) protected options = {},
+    protected authService: AuthenticationService,
+    protected cd: ChangeDetectorRef,
+    protected router: Router) {
 
     this.redirectDelay = this.getConfigValue('forms.register.redirectDelay');
     this.showMessages = this.getConfigValue('forms.register.showMessages');
@@ -45,14 +47,14 @@ export class NbRegisterComponent {
   register(): void {
     this.errors = this.messages = [];
     this.submitted = true;
-
-    this.service.register(this.strategy, this.user).subscribe((result: NbAuthResult) => {
+    this.user.userName = this.user.emailAddress;
+    this.user.surname = this.user.name;
+    this.authService.register(this.user).subscribe((result: any) => {
       this.submitted = false;
-      if (result.isSuccess()) {
-          this.router.navigate(['/pages/dashboard']);
-        this.messages = result.getMessages();
+      if (result.success == true) {
+        this.router.navigate(['/auth']);
       } else {
-        this.errors = result.getErrors();
+        this.errors = result.error.message;
       }
 
       const redirect = result.getRedirect();
