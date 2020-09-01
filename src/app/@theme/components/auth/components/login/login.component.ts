@@ -69,8 +69,8 @@ export class NbLoginComponent {
         this.router.navigate(['/pages/dashboard']);
 
       } else {
-        console.log(result.error);
-        this.errors = result.error.message;
+        console.log(result);
+        this.errors = ['Authentication Failed ! '];
       }
       this.cd.detectChanges();
     });
