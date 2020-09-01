@@ -69,7 +69,6 @@ export class NbLoginComponent {
         localStorage.setItem('appToken', result.result.accessToken)
         // this.tokenService.set();
         this.router.navigate(['/pages/dashboard']);
-        this.messages = result.getMessages();
 
       } else {
         console.log(result.error);
