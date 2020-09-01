@@ -56,13 +56,6 @@ export class NbRegisterComponent {
       } else {
         this.errors = result.error.message;
       }
-
-      const redirect = result.getRedirect();
-      if (redirect) {
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
-      }
       this.cd.detectChanges();
     });
   }

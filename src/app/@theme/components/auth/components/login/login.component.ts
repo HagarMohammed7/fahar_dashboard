@@ -55,8 +55,6 @@ export class NbLoginComponent {
     this.errors = [];
     this.messages = [];
     this.submitted = true;
-    debugger
-
     this.authService.authenticate({
       userNameOrEmailAddress: this.usermail,
       password: this.userpassword,
